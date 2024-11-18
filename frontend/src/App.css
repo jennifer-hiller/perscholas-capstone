@@ -37,3 +37,8 @@ label {
   padding: 0;
   list-style: none;
 }
+.comments li {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid lightgray;
+}

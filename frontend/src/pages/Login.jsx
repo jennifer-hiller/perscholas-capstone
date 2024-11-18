@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function Login({ onLogin }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigation = useNavigate();
@@ -18,7 +19,7 @@ export default function Login() {
         password,
       });
       if (user) {
-        localStorage.setItem("user", user.data._id);
+        onLogin(user.data._id);
         navigation("/");
       }
     } catch (e) {
@@ -34,14 +35,30 @@ export default function Login() {
       <form onSubmit={handleSubmit}>
         <p>
           <label htmlFor="username">Username</label>
-          <input type="text" name="username" id="username" />
+          <input
+            type="text"
+            name="username"
+            id="username"
+            className="form-control"
+          />
         </p>
         <p>
           <label htmlFor="password">Password</label>
-          <input type="password" name="password" id="password" />
+          <input
+            type="password"
+            name="password"
+            id="password"
+            className="form-control"
+          />
         </p>
         <p>
-          {loading ? <button disabled>Login</button> : <button>Login</button>}
+          {loading ? (
+            <button disabled className="btn btn-primary">
+              Login
+            </button>
+          ) : (
+            <button className="btn btn-primary">Login</button>
+          )}
         </p>
       </form>
       {error && <p>{error.message}</p>}

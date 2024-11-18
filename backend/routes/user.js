@@ -17,6 +17,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const newUser = new User(req.body);
+    newUser.save();
     res.status(201).json(newUser);
   } catch (e) {
     res.send(e).status(400);

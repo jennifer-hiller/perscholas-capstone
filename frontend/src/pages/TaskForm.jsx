@@ -82,6 +82,7 @@ export default function TaskForm() {
             type="text"
             name="title"
             id="title"
+            className="form-control"
             value={task.title}
             onChange={(e) => setTask({ ...task, title: e.target.value })}
           />
@@ -90,6 +91,7 @@ export default function TaskForm() {
           <label htmlFor="description">Description</label>
           <textarea
             name="description"
+            className="form-control"
             value={task.description}
             onChange={(e) => setTask({ ...task, description: e.target.value })}
           ></textarea>
@@ -97,9 +99,11 @@ export default function TaskForm() {
         <p>
           <label htmlFor="assignedTo">Assigned To</label>
           <select
+            className="form-control"
             name="assignedTo"
             id="assignedTo"
             onChange={(e) => setTask({ ...task, assignedTo: e.target.value })}
+            defaultValue={task.assignedTo}
           >
             {users.map((user) => (
               <option key={user._id} value={user._id}>
@@ -111,9 +115,11 @@ export default function TaskForm() {
         <p>
           <label htmlFor="severity">Severity</label>
           <select
+            className="form-control"
             name="severity"
             id="severity"
             onChange={(e) => setTask({ ...task, severity: e.target.value })}
+            defaultValue={task.severity}
           >
             <option value="Low">Low</option>
             <option value="Moderate">Moderate</option>
@@ -124,9 +130,11 @@ export default function TaskForm() {
         <p>
           <label htmlFor="status">Status</label>
           <select
+            className="form-control"
             name="status"
             id="status"
             onChange={(e) => setTask({ ...task, status: e.target.value })}
+            defaultValue={task.status}
           >
             <option value="To Do">To Do</option>
             <option value="In Progress">In Progress</option>
@@ -134,7 +142,9 @@ export default function TaskForm() {
           </select>
         </p>
         <p>
-          <button type="submit">Save</button>
+          <button type="submit" className="btn btn-primary">
+            Save
+          </button>
         </p>
       </form>
       {submitError && <p>Couldn&apos;t save Task: {submitError.message}</p>}

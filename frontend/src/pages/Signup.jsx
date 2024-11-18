@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Signup() {
+export default function Signup({ onLogin }) {
   const navigation = useNavigate();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -10,6 +11,7 @@ export default function Signup() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
+    delete data.password2;
     const password = e.target.password.value;
     const password2 = e.target.password2.value;
     if (password !== password2) {
@@ -19,10 +21,10 @@ export default function Signup() {
     try {
       setLoading(true);
       const user = await axios.post("http://localhost:3000/api/user", {
-        data,
+        ...data,
       });
       if (user) {
-        localStorage.setItem("user", user.data._id);
+        onLogin(user.data._id);
         navigation("/");
       }
     } catch (e) {
@@ -36,29 +38,51 @@ export default function Signup() {
       <form onSubmit={handleSubmit}>
         <p>
           <label htmlFor="name">Name</label>
-          <input type="text" name="name" id="name" />
+          <input type="text" name="name" id="name" className="form-control" />
         </p>
         <p>
           <label htmlFor="username">Username</label>
-          <input type="text" name="username" id="username" />
+          <input
+            type="text"
+            name="username"
+            id="username"
+            className="form-control"
+          />
         </p>
         <p>
           <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className="form-control"
+          />
         </p>
         <p>
           <label htmlFor="password">Password</label>
-          <input type="password" name="password" id="password" />
+          <input
+            type="password"
+            name="password"
+            id="password"
+            className="form-control"
+          />
         </p>
         <p>
           <label htmlFor="password2">Retype Password</label>
-          <input type="password" name="password2" id="password2" />
+          <input
+            type="password"
+            name="password2"
+            id="password2"
+            className="form-control"
+          />
         </p>
         <p>
           {loading ? (
-            <button disabled>Sign Up</button>
+            <button disabled className="btn btn-primary">
+              Sign Up
+            </button>
           ) : (
-            <button>Sign Up</button>
+            <button className="btn btn-primary">Sign Up</button>
           )}
         </p>
       </form>
