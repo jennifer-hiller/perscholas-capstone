@@ -14,24 +14,36 @@ export default function TaskForm() {
   const params = useParams();
   const id = params.id;
 
+  function handleInputChange(e) {
+    const { name, value } = e.target;
+    setTask((prevTask) => ({
+      ...prevTask,
+      [name]: value,
+    }));
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
     if (id) {
+      data.createdBy = task.createdBy;
       try {
-        await axios.put(`http://localhost:3000/api/task/${id}`, task);
-        navigate(`/task/${id}`);
+        await axios.put(`http://localhost:3000/api/task/${id}`, data);
+        navigate(`/detail/${id}`);
       } catch (e) {
         console.error(e);
         setSubmitError(e);
       }
     } else {
-      setTask({ ...task, createdBy: localStorage.getItem("user") });
+      data.createdBy = localStorage.getItem("user");
       try {
         const newTask = await axios.post(
           "http://localhost:3000/api/task/",
-          task
+          data
         );
-        navigate(`/task/${newTask._id}`);
+        navigate(`/detail/${newTask.data._id}`);
       } catch (e) {
         console.error(e);
         setSubmitError(e);
@@ -70,9 +82,8 @@ export default function TaskForm() {
     }
   }, [id]);
   if (taskLoading || usersLoading) return <div>Loading...</div>;
-  if (taskError) return <div>Couldn&apos;t load Task: {taskError.message}</div>;
-  if (usersError)
-    return <div>Couldn&apos;t load Users: {usersError.message}</div>;
+  if (taskError) return <div>Could not load Task: {taskError.message}</div>;
+  if (usersError) return <div>Could not load Users: {usersError.message}</div>;
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -84,7 +95,7 @@ export default function TaskForm() {
             id="title"
             className="form-control"
             value={task.title}
-            onChange={(e) => setTask({ ...task, title: e.target.value })}
+            onChange={handleInputChange}
           />
         </p>
         <p>
@@ -93,7 +104,7 @@ export default function TaskForm() {
             name="description"
             className="form-control"
             value={task.description}
-            onChange={(e) => setTask({ ...task, description: e.target.value })}
+            onChange={handleInputChange}
           ></textarea>
         </p>
         <p>
@@ -102,8 +113,8 @@ export default function TaskForm() {
             className="form-control"
             name="assignedTo"
             id="assignedTo"
-            onChange={(e) => setTask({ ...task, assignedTo: e.target.value })}
             defaultValue={task.assignedTo}
+            onChange={handleInputChange}
           >
             {users.map((user) => (
               <option key={user._id} value={user._id}>
@@ -118,8 +129,8 @@ export default function TaskForm() {
             className="form-control"
             name="severity"
             id="severity"
-            onChange={(e) => setTask({ ...task, severity: e.target.value })}
             defaultValue={task.severity}
+            onChange={handleInputChange}
           >
             <option value="Low">Low</option>
             <option value="Moderate">Moderate</option>
@@ -133,8 +144,8 @@ export default function TaskForm() {
             className="form-control"
             name="status"
             id="status"
-            onChange={(e) => setTask({ ...task, status: e.target.value })}
             defaultValue={task.status}
+            onChange={handleInputChange}
           >
             <option value="To Do">To Do</option>
             <option value="In Progress">In Progress</option>
@@ -147,7 +158,7 @@ export default function TaskForm() {
           </button>
         </p>
       </form>
-      {submitError && <p>Couldn&apos;t save Task: {submitError.message}</p>}
+      {submitError && <p>Could not save Task: {submitError.message}</p>}
     </>
   );
 }

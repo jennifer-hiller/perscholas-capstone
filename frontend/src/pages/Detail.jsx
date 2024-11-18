@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { formatDate } from "../../utils/utils";
 
 export default function Detail() {
@@ -11,6 +11,19 @@ export default function Detail() {
   const [commentError, setCommentError] = useState(null);
   const params = useParams();
   const id = params.id;
+  async function handleDelete() {
+    try {
+      const confirm = window.confirm(
+        "Are you sure you want to delete this task?"
+      );
+      if (!confirm) return;
+      await axios.delete(`http://localhost:3000/api/task/${id}`);
+      window.location.href = "/";
+    } catch (e) {
+      console.error(e);
+      setError(e);
+    }
+  }
   const getTask = useCallback(async () => {
     try {
       const data = await axios.get(`http://localhost:3000/api/task/${id}`);
@@ -51,6 +64,12 @@ export default function Detail() {
   return (
     <>
       <h1>{task.title}</h1>
+      <p>
+        <Link to={`/detail/${id}/edit`}>Edit</Link>
+        <button className="btn btn-danger" onClick={handleDelete}>
+          Delete
+        </button>
+      </p>
       <h2>Assigned to: {task.assignedTo.name}</h2>
       <h2>Created by: {task.createdBy.name}</h2>
       <h3>Created at: {formatDate(task.created)}</h3>
