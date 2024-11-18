@@ -7,6 +7,10 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const users = await User.find({});
+    // don't send back users' passwords
+    users.forEach((user) => {
+      user.password = undefined;
+    });
     res.status(200).json(users);
   } catch (e) {
     res.send(e).status(400);
@@ -38,8 +42,15 @@ router.get("/:id", async (req, res) => {
       user = await User.findById(req.params.id)
         .populate("created")
         .populate("assigned")
-        .populate("comments");
+        .populate({
+          path: "comments",
+          populate: {
+            path: "task",
+          },
+        });
     }
+    // don't send back user's password
+    user.password = undefined;
     if (!user) return res.status(404).send("User not found");
     res.status(200).json(user);
   } catch (e) {

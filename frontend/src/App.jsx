@@ -6,6 +6,8 @@ import TaskForm from "./pages/TaskForm";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { useState } from "react";
+import Users from "./pages/Users";
+import User from "./pages/User";
 function App() {
   const [user, setUser] = useState(localStorage.getItem("user"));
   function logoutUser() {
@@ -22,6 +24,9 @@ function App() {
         <ul>
           <li>
             <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/users">Users</Link>
           </li>
           <li className="logoutLinkContainer">
             {user ? (
@@ -41,6 +46,8 @@ function App() {
         <Route path="/task/new" element={<TaskForm />} />
         <Route path="/login" element={<Login onLogin={loginUser} />} />
         <Route path="/signup" element={<Signup onLogin={loginUser} />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/user/:id" element={<User />} />
       </Routes>
     </>
   );
