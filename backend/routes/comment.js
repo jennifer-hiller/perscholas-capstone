@@ -5,6 +5,7 @@ import Task from "../models/Task.js";
 
 const router = express.Router();
 
+// GET all comments or comments by userId or taskId
 router.get("/", async (req, res) => {
   try {
     let comments;
@@ -27,6 +28,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// POST a new comment
 router.post("/", async (req, res) => {
   const comment = req.body;
   const newComment = new Comment(comment);
@@ -36,8 +38,10 @@ router.post("/", async (req, res) => {
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
     }
+    // add the comment to the related task's schema
     task.comments.push(newComment._id);
     await task.save();
+    // add the comment to the author's schema
     const author = await User.findById(comment.author);
     if (!author) {
       return res.status(404).json({ message: "Author not found" });
@@ -50,6 +54,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// GET a specific comment by ID
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -60,6 +65,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// PUT to update a specific comment by ID
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const comment = req.body;
@@ -72,6 +78,7 @@ router.put("/:id", async (req, res) => {
   if (!commenter) {
     return res.status(404).json({ message: "Commenter not found" });
   }
+  // take the comment out of the commenter's schema
   commenter.comments.pull(updatedComment._id);
   await commenter.save();
   const newCommenter = await User.findById(comment.author);
@@ -82,6 +89,7 @@ router.put("/:id", async (req, res) => {
   res.json(updatedComment);
 });
 
+// DELETE a specific comment by ID
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   const deletedComment = await Comment.findByIdAndDelete(id);

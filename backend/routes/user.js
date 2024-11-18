@@ -3,6 +3,7 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
+// GET all users
 router.get("/", async (req, res) => {
   try {
     const users = await User.find({});
@@ -12,7 +13,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Create User
+// POST to create User
 router.post("/", async (req, res) => {
   try {
     const newUser = new User(req.body);
@@ -22,7 +23,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Get user's info, optionally passing query params to get the user's assigned and created tasks, and comments
+// GET user's info, optionally passing query params to get the user's assigned and created tasks, and comments
 router.get("/:id", async (req, res) => {
   try {
     let user;
@@ -45,7 +46,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Update user
+// PUT: update user
 router.put("/:id", async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
@@ -81,6 +82,8 @@ router.delete("/:id", async (req, res) => {
     res.send(e).status(400);
   }
 });
+
+// POST: authenticate a user
 router.post("/login", async (req, res) => {
   try {
     const { username } = req.body;

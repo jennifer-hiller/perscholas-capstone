@@ -4,6 +4,7 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
+// GET all tasks
 router.get("/", async (req, res) => {
   try {
     if (req.query.status) {
@@ -19,6 +20,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// POST a new task
 router.post("/", async (req, res) => {
   try {
     const assigner = await User.findById(req.body.createdBy);
@@ -37,6 +39,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// GET a specific task by id
 router.get("/:id", async (req, res) => {
   try {
     const task = await Task.findById(req.params.id)
@@ -57,6 +60,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// PUT an update to a task by id
 router.put("/:id", async (req, res) => {
   try {
     const { created, ...updateData } = req.body;
@@ -87,6 +91,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// DELETE a task by id
 router.delete("/:id", async (req, res) => {
   try {
     const task = await Task.findByIdAndDelete(req.params.id);
