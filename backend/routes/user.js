@@ -81,4 +81,20 @@ router.delete("/:id", async (req, res) => {
     res.send(e).status(400);
   }
 });
+router.post("/login", async (req, res) => {
+  try {
+    const { username } = req.body;
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    if (user.password !== req.body.password) {
+      return res.status(401).send("Invalid password");
+    }
+    res.status(201).json(user);
+  } catch (e) {
+    res.send(e).status(400);
+  }
+});
 export default router;

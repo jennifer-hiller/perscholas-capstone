@@ -20,51 +20,32 @@ export default function Main() {
       }
     }
     getTasks();
-    setLoading(false);
   }, []);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
   return (
-    <>
+    <div className="homeTasks">
       <ul>
         {tasks
           .filter((task) => task.status === "To Do")
           .map((task) => (
-            <TaskItem
-              key={task._id}
-              title={task.title}
-              description={task.description}
-              severity={task.severity}
-              status={task.status}
-            />
+            <TaskItem key={task._id} task={task} />
           ))}
       </ul>
       <ul>
         {tasks
           .filter((task) => task.status === "In Progress")
           .map((task) => (
-            <TaskItem
-              key={task._id}
-              title={task.title}
-              description={task.description}
-              severity={task.severity}
-              status={task.status}
-            />
+            <TaskItem key={task._id} task={task} />
           ))}
       </ul>
       <ul>
         {tasks
           .filter((task) => task.status === "Completed")
           .map((task) => (
-            <TaskItem
-              key={task._id}
-              title={task.title}
-              description={task.description}
-              severity={task.severity}
-              status={task.status}
-            />
+            <TaskItem key={task._id} task={task} />
           ))}
       </ul>
-    </>
+    </div>
   );
 }
