@@ -65,7 +65,13 @@ export default function Detail() {
     <>
       <h1>{task.title}</h1>
       <p>
-        <Link to={`/detail/${id}/edit`}>Edit</Link>
+        <Link
+          to={`/detail/${id}/edit`}
+          className="btn btn-secondary"
+          style={{ marginRight: "1rem" }}
+        >
+          Edit
+        </Link>
         <button className="btn btn-danger" onClick={handleDelete}>
           Delete
         </button>

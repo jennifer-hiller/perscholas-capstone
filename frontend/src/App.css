@@ -5,6 +5,13 @@ label {
   display: block;
   font-weight: bold;
 }
+nav > ul {
+  list-style: none;
+  display: flex;
+}
+.logoutLinkContainer {
+  margin-left: auto;
+}
 .homeTasks {
   display: flex;
 }

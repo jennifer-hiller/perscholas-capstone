@@ -23,10 +23,7 @@ function App() {
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="/users">Users</Link>
-          </li>
-          <li>
+          <li className="logoutLinkContainer">
             {user ? (
               <button className="btn btn-primary" onClick={logoutUser}>
                 Logout

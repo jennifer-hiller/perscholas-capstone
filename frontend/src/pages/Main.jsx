@@ -28,7 +28,9 @@ export default function Main() {
     <>
       <p>
         {localStorage.getItem("user") ? (
-          <Link to="/task/new">New Task</Link>
+          <Link to="/task/new" className="btn btn-secondary">
+            New Task
+          </Link>
         ) : (
           "You must be logged in to create a new task"
         )}
