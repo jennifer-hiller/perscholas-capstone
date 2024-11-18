@@ -34,27 +34,38 @@ export default function Main() {
         )}
       </p>
       <div className="homeTasks">
-        <ul>
-          {tasks
-            .filter((task) => task.status === "To Do")
-            .map((task) => (
-              <TaskItem key={task._id} task={task} />
-            ))}
-        </ul>
-        <ul>
-          {tasks
-            .filter((task) => task.status === "In Progress")
-            .map((task) => (
-              <TaskItem key={task._id} task={task} />
-            ))}
-        </ul>
-        <ul>
-          {tasks
-            .filter((task) => task.status === "Completed")
-            .map((task) => (
-              <TaskItem key={task._id} task={task} />
-            ))}
-        </ul>
+        <div>
+          <h2>To Do</h2>
+          <ul>
+            {tasks
+              .filter((task) => task.status === "To Do")
+              .map((task) => (
+                <TaskItem key={task._id} task={task} />
+              ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2>In Progress</h2>
+          <ul>
+            {tasks
+              .filter((task) => task.status === "In Progress")
+              .map((task) => (
+                <TaskItem key={task._id} task={task} />
+              ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2>Completed</h2>
+          <ul>
+            {tasks
+              .filter((task) => task.status === "Completed")
+              .map((task) => (
+                <TaskItem key={task._id} task={task} />
+              ))}
+          </ul>
+        </div>
       </div>
     </>
   );
