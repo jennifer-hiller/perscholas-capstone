@@ -4,6 +4,7 @@ import Main from "./pages/Main";
 import Detail from "./pages/Detail";
 import TaskForm from "./pages/TaskForm";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/detail/:id/edit" element={<TaskForm />} />
         <Route path="/task/new" element={<TaskForm />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </>
   );

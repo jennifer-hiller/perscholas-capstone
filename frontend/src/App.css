@@ -1,6 +1,10 @@
 body {
   padding: 1rem;
 }
+label {
+  display: block;
+  font-weight: bold;
+}
 .homeTasks {
   display: flex;
 }

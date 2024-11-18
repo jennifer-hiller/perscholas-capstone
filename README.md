@@ -1,4 +1,5 @@
 Run `cd backend` and run `npm run dev` to run the backend.
+If you would like to seed the backend first, run `npm run seed`.
 In another terminal, run `cd frontend` and run `npm run dev` to run the frontend.
 
 # JIRA clone
