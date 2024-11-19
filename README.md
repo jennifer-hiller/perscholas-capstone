@@ -8,6 +8,8 @@
 
 ### Installing
 
+Be sure to put a .env file in the `backend` folder. This should contain two variables: `ATLAS_URI` and `PORT`. `ATLAS_URI` needs to point to your database on Mongo Atlas.
+
 Run `cd backend` and run `npm install`
 Then cd back to root and run `cd frontend` and run `npm install`
 
