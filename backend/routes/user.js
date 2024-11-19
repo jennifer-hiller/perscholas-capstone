@@ -21,9 +21,12 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const newUser = new User(req.body);
-    newUser.save();
+    await newUser.save();
     res.status(201).json(newUser);
   } catch (e) {
+    if (e.name === "ValidationError") {
+      return res.status(400).send("Validation failed: " + e.message);
+    }
     res.send(e).status(400);
   }
 });
