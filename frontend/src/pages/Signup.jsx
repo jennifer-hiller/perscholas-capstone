@@ -12,8 +12,28 @@ export default function Signup({ onLogin }) {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
     delete data.password2;
-    const password = e.target.password.value;
-    const password2 = e.target.password2.value;
+    const password = formData.get("password");
+    const password2 = formData.get("password2");
+    const username = formData.get("username");
+    const name = formData.get("name");
+    const email = formData.get("email");
+    if (username.length < 3) {
+      setError("Username must be at least 3 characters long");
+      return;
+    }
+    if (name.length < 3) {
+      setError("Name must be at least 3 characters long");
+      return;
+    }
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long");
+      return;
+    }
+    // validate email to match valid email address
+    if (!email.match(/^[^@]+@[^@]+\.[^@]+$/)) {
+      setError("Invalid email address");
+      return;
+    }
     if (password !== password2) {
       setError("Passwords do not match");
       return;
@@ -38,7 +58,14 @@ export default function Signup({ onLogin }) {
       <form onSubmit={handleSubmit}>
         <p>
           <label htmlFor="name">Name</label>
-          <input type="text" name="name" id="name" className="form-control" />
+          <input
+            type="text"
+            name="name"
+            id="name"
+            className="form-control"
+            required
+            minLength={3}
+          />
         </p>
         <p>
           <label htmlFor="username">Username</label>
@@ -47,6 +74,8 @@ export default function Signup({ onLogin }) {
             name="username"
             id="username"
             className="form-control"
+            required
+            minLength={3}
           />
         </p>
         <p>
@@ -56,6 +85,8 @@ export default function Signup({ onLogin }) {
             name="email"
             id="email"
             className="form-control"
+            required
+            minLength={3}
           />
         </p>
         <p>
@@ -65,6 +96,8 @@ export default function Signup({ onLogin }) {
             name="password"
             id="password"
             className="form-control"
+            required
+            minLength={8}
           />
         </p>
         <p>
@@ -74,6 +107,8 @@ export default function Signup({ onLogin }) {
             name="password2"
             id="password2"
             className="form-control"
+            required
+            minLength={8}
           />
         </p>
         <p>

@@ -12,6 +12,10 @@ export default function Login({ onLogin }) {
     setError(null);
     const username = e.target.username.value;
     const password = e.target.password.value;
+    if (!username || !password) {
+      setError(new Error("Please fill in all fields"));
+      return;
+    }
     setLoading(true);
     try {
       const user = await axios.post("http://localhost:3000/api/user/login", {
@@ -40,6 +44,8 @@ export default function Login({ onLogin }) {
             name="username"
             id="username"
             className="form-control"
+            required
+            minLength={3}
           />
         </p>
         <p>
@@ -49,6 +55,8 @@ export default function Login({ onLogin }) {
             name="password"
             id="password"
             className="form-control"
+            required
+            minLength={8}
           />
         </p>
         <p>

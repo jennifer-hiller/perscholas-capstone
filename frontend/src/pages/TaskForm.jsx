@@ -25,6 +25,14 @@ export default function TaskForm() {
   async function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
+    if (formData.get("title") === "") {
+      setSubmitError("Title is required");
+      return;
+    }
+    if (formData.get("description") === "") {
+      setSubmitError("Description is required");
+      return;
+    }
     const data = Object.fromEntries(formData);
 
     if (id) {
@@ -96,6 +104,8 @@ export default function TaskForm() {
             className="form-control"
             value={task.title}
             onChange={handleInputChange}
+            required
+            minLength={1}
           />
         </p>
         <p>
@@ -105,6 +115,8 @@ export default function TaskForm() {
             className="form-control"
             value={task.description}
             onChange={handleInputChange}
+            required
+            minLength={1}
           ></textarea>
         </p>
         <p>

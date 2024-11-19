@@ -39,6 +39,10 @@ export default function Detail() {
     e.preventDefault();
     setCommentLoading(true);
     const comment = e.target.comment.value;
+    if (!comment) {
+      setCommentError("Comment cannot be empty");
+      return;
+    }
     const author = localStorage.getItem("user");
     const content = {
       content: comment,
@@ -91,6 +95,8 @@ export default function Detail() {
               name="comment"
               id="comment"
               className="form-control"
+              required
+              minLength={1}
             ></textarea>
           </p>
           <p>
