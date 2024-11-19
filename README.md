@@ -29,6 +29,7 @@ This simplified taskmaster app will grant users the ability to:
 - Edit tasks, including reassigning
 - Deleting tasks
 - Commenting on tasks
+- Chuck Norris joke generator
 
 Future releases will include:
 
