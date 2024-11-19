@@ -49,7 +49,10 @@ router.post("/", async (req, res) => {
     author.comments.push(newComment._id);
     await author.save();
     res.status(201).json(newComment);
-  } catch (error) {
+  } catch (e) {
+    if (e.name === "ValidationError") {
+      return res.status(400).send("Validation failed: " + e.message);
+    }
     res.status(409).json({ message: error.message });
   }
 });
@@ -69,24 +72,31 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const comment = req.body;
-  const updatedComment = await Comment.findByIdAndUpdate(id, comment, {
-    new: true,
-  });
-  if (!updatedComment) return res.status(404).send("Comment not found");
-  // in the unlikely event that the author changed....
-  const commenter = await User.findById(comment.author);
-  if (!commenter) {
-    return res.status(404).json({ message: "Commenter not found" });
+  try {
+    const updatedComment = await Comment.findByIdAndUpdate(id, comment, {
+      new: true,
+    });
+    if (!updatedComment) return res.status(404).send("Comment not found");
+    // in the unlikely event that the author changed....
+    const commenter = await User.findById(comment.author);
+    if (!commenter) {
+      return res.status(404).json({ message: "Commenter not found" });
+    }
+    // take the comment out of the commenter's schema
+    commenter.comments.pull(updatedComment._id);
+    await commenter.save();
+    const newCommenter = await User.findById(comment.author);
+    if (!newCommenter) {
+      return res.status(404).json({ message: "Author not found" });
+    }
+    newCommenter.comments.push(updatedComment._id);
+    res.json(updatedComment);
+  } catch (e) {
+    if (e.name === "ValidationError") {
+      return res.status(400).send("Validation failed: " + e.message);
+    }
+    res.send(e).status(400);
   }
-  // take the comment out of the commenter's schema
-  commenter.comments.pull(updatedComment._id);
-  await commenter.save();
-  const newCommenter = await User.findById(comment.author);
-  if (!newCommenter) {
-    return res.status(404).json({ message: "Author not found" });
-  }
-  newCommenter.comments.push(updatedComment._id);
-  res.json(updatedComment);
 });
 
 // DELETE a specific comment by ID

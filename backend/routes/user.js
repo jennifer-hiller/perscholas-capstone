@@ -70,6 +70,9 @@ router.put("/:id", async (req, res) => {
     if (!updatedUser) return res.status(404).send("User not found");
     res.status(200).json(updatedUser);
   } catch (e) {
+    if (e.name === "ValidationError") {
+      return res.status(400).send("Validation failed: " + e.message);
+    }
     res.send(e).status(400);
   }
 });

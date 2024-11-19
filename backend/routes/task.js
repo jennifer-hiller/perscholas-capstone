@@ -35,6 +35,9 @@ router.post("/", async (req, res) => {
     await assignee.save();
     res.status(201).json(task);
   } catch (e) {
+    if (e.name === "ValidationError") {
+      return res.status(400).send("Validation failed: " + e.message);
+    }
     res.send(e).status(400);
   }
 });
@@ -87,6 +90,9 @@ router.put("/:id", async (req, res) => {
     await newAssignee.save();
     res.status(200).json(task);
   } catch (e) {
+    if (e.name === "ValidationError") {
+      return res.status(400).send("Validation failed: " + e.message);
+    }
     res.send(e).status(400);
   }
 });
