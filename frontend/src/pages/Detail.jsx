@@ -64,18 +64,20 @@ export default function Detail() {
   return (
     <>
       <h1>{task.title}</h1>
-      <p>
-        <Link
-          to={`/detail/${id}/edit`}
-          className="btn btn-secondary"
-          style={{ marginRight: "1rem" }}
-        >
-          Edit
-        </Link>
-        <button className="btn btn-danger" onClick={handleDelete}>
-          Delete
-        </button>
-      </p>
+      {localStorage.getItem("user") && (
+        <p>
+          <Link
+            to={`/detail/${id}/edit`}
+            className="btn btn-secondary"
+            style={{ marginRight: "1rem" }}
+          >
+            Edit
+          </Link>
+          <button className="btn btn-danger" onClick={handleDelete}>
+            Delete
+          </button>
+        </p>
+      )}
       <h2>Assigned to: {task.assignedTo.name}</h2>
       <h2>Created by: {task.createdBy.name}</h2>
       <h3>Created at: {formatDate(task.created)}</h3>
