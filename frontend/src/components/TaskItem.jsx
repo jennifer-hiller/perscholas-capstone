@@ -10,7 +10,6 @@ export default function TaskItem({ task }) {
       <p>Assigned To: {task.assignedTo.name}</p>
       <p>{task.description.substring(0, 100)}...</p>
       <p>Severity: {task.severity}</p>
-      <p>Status: {task.status}</p>
     </li>
   );
 }
