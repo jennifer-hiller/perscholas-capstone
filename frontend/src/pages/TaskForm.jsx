@@ -38,7 +38,10 @@ export default function TaskForm() {
     if (id) {
       data.createdBy = task.createdBy;
       try {
-        await axios.put(`http://localhost:3000/api/task/${id}`, data);
+        await axios.put(
+          `https://perscholas-capstone-4dzy.onrender.com/api/task/${id}`,
+          data
+        );
         navigate(`/detail/${id}`);
       } catch (e) {
         console.error(e);
@@ -48,7 +51,7 @@ export default function TaskForm() {
       data.createdBy = localStorage.getItem("user");
       try {
         const newTask = await axios.post(
-          "http://localhost:3000/api/task/",
+          "https://perscholas-capstone-4dzy.onrender.com/api/task/",
           data
         );
         navigate(`/detail/${newTask.data._id}`);
@@ -63,7 +66,9 @@ export default function TaskForm() {
     async function getUsers() {
       setUsersLoading(true);
       try {
-        const data = await axios.get("http://localhost:3000/api/user");
+        const data = await axios.get(
+          "https://perscholas-capstone-4dzy.onrender.com/api/user"
+        );
         setUsers(data.data);
       } catch (e) {
         console.error(e);
@@ -75,7 +80,9 @@ export default function TaskForm() {
     async function getTask() {
       try {
         setTaskLoading(true);
-        const data = await axios.get(`http://localhost:3000/api/task/${id}`);
+        const data = await axios.get(
+          `https://perscholas-capstone-4dzy.onrender.com/api/task/${id}`
+        );
         setTask(data.data);
       } catch (e) {
         console.error(e);

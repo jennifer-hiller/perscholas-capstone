@@ -17,7 +17,9 @@ export default function Detail() {
         "Are you sure you want to delete this task?"
       );
       if (!confirm) return;
-      await axios.delete(`http://localhost:3000/api/task/${id}`);
+      await axios.delete(
+        `https://perscholas-capstone-4dzy.onrender.com/api/task/${id}`
+      );
       window.location.href = "/";
     } catch (e) {
       console.error(e);
@@ -26,7 +28,9 @@ export default function Detail() {
   }
   const getTask = useCallback(async () => {
     try {
-      const data = await axios.get(`http://localhost:3000/api/task/${id}`);
+      const data = await axios.get(
+        `https://perscholas-capstone-4dzy.onrender.com/api/task/${id}`
+      );
       setTask(data.data);
     } catch (e) {
       console.error(e);
@@ -50,7 +54,10 @@ export default function Detail() {
       task: id,
     };
     try {
-      await axios.post(`http://localhost:3000/api/comment`, content);
+      await axios.post(
+        `https://perscholas-capstone-4dzy.onrender.com/api/comment`,
+        content
+      );
       getTask();
       e.target.reset();
     } catch (e) {

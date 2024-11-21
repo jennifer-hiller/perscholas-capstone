@@ -18,10 +18,13 @@ export default function Login({ onLogin }) {
     }
     setLoading(true);
     try {
-      const user = await axios.post("http://localhost:3000/api/user/login", {
-        username,
-        password,
-      });
+      const user = await axios.post(
+        "https://perscholas-capstone-4dzy.onrender.com/api/user/login",
+        {
+          username,
+          password,
+        }
+      );
       if (user) {
         onLogin(user.data._id);
         navigation("/");

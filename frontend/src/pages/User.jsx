@@ -13,7 +13,9 @@ export default function User() {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const data = await axios.get(`http://localhost:3000/api/user/${id}`);
+        const data = await axios.get(
+          `https://perscholas-capstone-4dzy.onrender.com/api/user/${id}`
+        );
         setUser(data.data);
       } catch (e) {
         setError(e);

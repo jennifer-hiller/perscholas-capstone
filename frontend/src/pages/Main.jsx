@@ -11,7 +11,9 @@ export default function Main() {
     async function getTasks() {
       try {
         setLoading(true);
-        const data = await axios.get("http://localhost:3000/api/task");
+        const data = await axios.get(
+          "https://perscholas-capstone-4dzy.onrender.com/api/task"
+        );
         setTasks(data.data);
       } catch (e) {
         console.error(e);

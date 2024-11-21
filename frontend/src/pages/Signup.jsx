@@ -40,9 +40,12 @@ export default function Signup({ onLogin }) {
     }
     try {
       setLoading(true);
-      const user = await axios.post("http://localhost:3000/api/user", {
-        ...data,
-      });
+      const user = await axios.post(
+        "https://perscholas-capstone-4dzy.onrender.com/api/user",
+        {
+          ...data,
+        }
+      );
       if (user) {
         onLogin(user.data._id);
         navigation("/");

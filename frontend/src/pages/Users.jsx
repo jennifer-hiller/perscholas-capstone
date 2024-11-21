@@ -8,7 +8,9 @@ export default function Users() {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const data = await axios.get("http://localhost:3000/api/user");
+        const data = await axios.get(
+          "https://perscholas-capstone-4dzy.onrender.com/api/user"
+        );
         setUsers(data.data);
       } catch (e) {
         setError(e);
