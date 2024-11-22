@@ -120,7 +120,7 @@ export default function Detail() {
           {commentError && <p>Error: {commentError.message}</p>}
         </form>
       ) : (
-        "You must be logged in to create a new task"
+        "You must be logged in to comment"
       )}
       <div className="comments">
         <h4>Comments:</h4>
